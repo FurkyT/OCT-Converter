@@ -58,9 +58,13 @@ def extract_fda_with_images_and_json(fda_file_path, output_dir):
     chunk_dict = fda.get_list_of_file_chunks(show=False)
     output_json = dict()
     for key in chunk_dict.keys():
-        if key in [b'@IMG_JPEG', b'@IMG_FUNDUS', b"@IMG_TRC_02"]: #this chunks are image chunks and extract with another methods
+        if key in [
+            b"@IMG_JPEG",
+            b"@IMG_FUNDUS",
+            b"@IMG_TRC_02",
+        ]:  # this chunks are image chunks and extract with another methods
             continue
-        json_key = key.decode().split('@')[-1].lower()
+        json_key = key.decode().split("@")[-1].lower()
         try:
             output_json[json_key] = fda.read_any_info_and_make_dict(key)
         except KeyError:
@@ -73,4 +77,3 @@ def extract_fda_with_images_and_json(fda_file_path, output_dir):
 
 
 extract_fda_with_images_and_json("./303249.fda", "./")
-

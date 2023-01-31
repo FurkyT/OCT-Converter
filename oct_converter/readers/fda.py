@@ -2,7 +2,16 @@ import io
 from pathlib import Path
 
 import numpy as np
-from construct import Float64n, Float32n, Int8un, Int16un, Int32un, PaddedString, Struct, ListContainer
+from construct import (
+    Float32n,
+    Float64n,
+    Int8un,
+    Int16un,
+    Int32un,
+    ListContainer,
+    PaddedString,
+    Struct,
+)
 from PIL import Image
 
 from oct_converter.image_types import FundusImageWithMetaData, OCTVolumeWithMetaData
@@ -189,24 +198,17 @@ class FDA(object):
             "size" / Int32un,
         )
 
-        self.align_info_header = Struct (
-            "0x0" / Int16un,
-            "num_slices" / Int32un,
-            "8.0.1.22004" / Int8un[32]
+        self.align_info_header = Struct(
+            "0x0" / Int16un, "num_slices" / Int32un, "8.0.1.22004" / Int8un[32]
         )
 
-        self.fast_q2_info_header = Struct (
-            "various_quality_statistics" / Float32n[6]
-        )
+        self.fast_q2_info_header = Struct("various_quality_statistics" / Float32n[6])
 
-        self.gla_littmann_01_header = Struct (
-            "0xffff" / Int32un,
-            "0x1" / Int32un
-        )
+        self.gla_littmann_01_header = Struct("0xffff" / Int32un, "0x1" / Int32un)
 
         self.chunk_dict = self.get_list_of_file_chunks()
 
-    def get_list_of_file_chunks(self,show =True):
+    def get_list_of_file_chunks(self, show=True):
         """Find all data chunks present in the file.
 
         Returns:
@@ -233,7 +235,7 @@ class FDA(object):
             print("File {} contains the following chunks:".format(self.filepath))
             for key in chunk_dict.keys():
                 print(key)
-            print('')
+            print("")
         return chunk_dict
 
     def read_oct_volume(self):
@@ -338,7 +340,7 @@ class FDA(object):
         fundus_gray_scale_image = FundusImageWithMetaData(image)
         return fundus_gray_scale_image
 
-    def read_any_info_and_make_dict(self,chunk_name):
+    def read_any_info_and_make_dict(self, chunk_name):
         """
         Reads chunks, get data and make dictionary
         :param chunk_name: name of the chunk which data will be taken.
@@ -355,7 +357,7 @@ class FDA(object):
             header_name = f"{chunk_name.decode().split('@')[-1].lower()}_header"
             chunk_info_header = dict(self.__dict__[header_name].parse(raw))
             chunks_info = dict()
-            for idx,key in enumerate(chunk_info_header.keys()):
+            for idx, key in enumerate(chunk_info_header.keys()):
                 if idx == 0:
                     continue
                 if type(chunk_info_header[key]) is ListContainer:
