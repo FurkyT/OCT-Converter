@@ -76,4 +76,4 @@ def extract_fda_with_images_and_json(fda_file_path, output_dir):
         outfile.write(info_json)
 
 
-extract_fda_with_images_and_json("./303249.fda", "./")
+extract_fda_with_images_and_json("your_fda_file_path", "your_output_path")
