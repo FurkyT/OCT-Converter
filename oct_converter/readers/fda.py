@@ -2,18 +2,15 @@ import io
 from pathlib import Path
 
 import numpy as np
+from construct import ListContainer, Struct
 from PIL import Image
-from construct import Struct, ListContainer
 
 from oct_converter.image_types import FundusImageWithMetaData, OCTVolumeWithMetaData
 from oct_converter.readers.binary_structs import fda_binary
 
 
-
 class FDA(object):
-    """Class for extracting data from Topcon's .fda file format.
-    
-    """
+    """Class for extracting data from Topcon's .fda file format."""
 
     def __init__(self, filepath):
         self.filepath = Path(filepath)
@@ -49,7 +46,7 @@ class FDA(object):
             print("File {} contains the following chunks:".format(self.filepath))
             for key in chunk_dict.keys():
                 print(key)
-            print('')
+            print("")
         return chunk_dict
 
     def read_oct_volume(self):
@@ -154,7 +151,7 @@ class FDA(object):
         fundus_gray_scale_image = FundusImageWithMetaData(image)
         return fundus_gray_scale_image
 
-    def read_any_info_and_make_dict(self,chunk_name):
+    def read_any_info_and_make_dict(self, chunk_name):
         """
         Reads chunks, get data and make dictionary
         :param chunk_name: name of the chunk which data will be taken.
@@ -171,7 +168,7 @@ class FDA(object):
             header_name = f"{chunk_name.decode().split('@')[-1].lower()}_header"
             chunk_info_header = dict(fda_binary.__dict__[header_name].parse(raw))
             chunks_info = dict()
-            for idx,key in enumerate(chunk_info_header.keys()):
+            for idx, key in enumerate(chunk_info_header.keys()):
                 if idx == 0:
                     continue
                 if type(chunk_info_header[key]) is ListContainer:
