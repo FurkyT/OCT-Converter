@@ -1,1 +1,21 @@
-from .boct_binary import bioptigen_file_structure, bioptigen_oct_header_struct
+from oct_converter.readers.binary_structs.boct_binary import bioptigen_file_structure, bioptigen_oct_header_struct
+from oct_converter.readers.binary_structs.fda_binary import (header,
+                                                             oct_header,
+                                                             oct_header_2,
+                                                             fundus_header,
+                                                             hw_info_03_header,
+                                                             patient_info_02_header,
+                                                             fda_file_info_header,
+                                                             capture_info_02_header,
+                                                             param_scan_04_header,
+                                                             img_trc_02_header,
+                                                             param_obs_02_header,
+                                                             img_mot_comp_03_header,
+                                                             img_projection_header,
+                                                             effective_scan_range_header,
+                                                             regist_info_header,
+                                                             result_cornea_curve_header,
+                                                             result_cornea_thickness_header,
+                                                             contour_info_header,
+                                                             fast_q2_info_header,
+                                                             gla_littmann_01_header)
